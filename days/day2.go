@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"encoding/csv"
@@ -10,9 +10,9 @@ import (
 	"strconv"
 )
 
-var inputFilename = "input2.csv"
+var inputFilename = "inputs/input2.csv"
 
-func main() {
+func Day2() {
 	file, err := os.Open(inputFilename)
 	if err != nil {
 		log.Printf("Couldn't open file %s, error was: %v", inputFilename, err)
@@ -54,7 +54,7 @@ func main() {
 	}
 
 	fmt.Printf("Checksum Star 1: %d\n", totalChecksumStar1)
-	fmt.Printf("Checksum Star 2: %d", totalChecksumStar2)
+	fmt.Printf("Checksum Star 2: %d\n", totalChecksumStar2)
 
 }
 
@@ -68,7 +68,7 @@ func evenlyDivisible(array []int) int {
 	for i := len(array) - 1; i > -1; i-- {
 		for j := 0; j < i; j++ {
 			if array[i]%array[j] == 0 {
-				fmt.Printf("Found divisible pair: %d, %d\n", array[i], array[j])
+				//fmt.Printf("Found divisible pair: %d, %d\n", array[i], array[j])
 				return array[i] / array[j]
 			}
 		}

@@ -1,4 +1,4 @@
-package main
+package days
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 
 var input3 = 361527
 
-func main() {
+func Day3() {
 	goal := input3
 	currentLimit := 0
 	circles := 1
@@ -22,7 +22,7 @@ func main() {
 	}
 	fmt.Printf("Centers: %d; Circles: %d\n", sideCenters, circles)
 	fmt.Printf("Min distance to center: %d\n", minDistance(sideCenters, goal))
-	fmt.Printf("Manhattan Distance: %d", circles+minDistance(sideCenters, goal))
+	fmt.Printf("Manhattan Distance: %d\n", circles+minDistance(sideCenters, goal))
 }
 
 func updateCenters(centers []int, farthestCorner, quarterDistance int) {
