@@ -47,7 +47,7 @@ func minDistance(array []int, value int) int {
 }
 
 func lastIntOfModuloArray(goal int) int {
-	start := []int{1, 1, 2, 4, 5, 10, 11, 23, 25}
+	/* start := []int{1, 1, 2, 4, 5, 10, 11, 23, 25}
 	lastNum := 25
 	ring := 2
 	side := 0
@@ -73,5 +73,6 @@ func lastIntOfModuloArray(goal int) int {
 		}
 		//case: middle number of side
 		//case: last number of a side
-	}
+	} */
+	return 0
 }
