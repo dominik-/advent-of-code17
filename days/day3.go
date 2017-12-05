@@ -23,6 +23,7 @@ func Day3() {
 	fmt.Printf("Centers: %d; Circles: %d\n", sideCenters, circles)
 	fmt.Printf("Min distance to center: %d\n", minDistance(sideCenters, goal))
 	fmt.Printf("Manhattan Distance: %d\n", circles+minDistance(sideCenters, goal))
+	fmt.Printf("First Snake Head above %d: %d\n", input3, snake())
 }
 
 func updateCenters(centers []int, farthestCorner, quarterDistance int) {
@@ -46,33 +47,108 @@ func minDistance(array []int, value int) int {
 	return distArray[0]
 }
 
-func lastIntOfModuloArray(goal int) int {
-	/* start := []int{1, 1, 2, 4, 5, 10, 11, 23, 25}
-	lastNum := 25
-	ring := 2
-	side := 0
-	for i := 10; lastNum < goal; i++ {
-		//now i counts the actual array index, so we need to defer the current "ring" to determine the position relative to corners
-		//for each ring (beyond the zero ring with only 1 number), 8 more numbers are added
-		if i%8 == 0 {
-			ring++
-			side := 0
-		}
-		//for each side 2 more numbers are added
-		currentSideLength := ring + 2
-		if i%currentSideLength == 0 {
-			side++
-			side = side % 4
-			//case: first number of a side
-			if side == 0 {
-				start = append(start, start[i-1])
-			} else {
-				//wtf...
-				sum := start[i-1] + start[i-2] + start[i-currentSideLength-ring*8+1]
+type Point struct {
+	X, Y, Val int
+}
+
+type Coordinates struct {
+	xAxis map[int][]*Point
+}
+
+func buildCoordinates() *Coordinates {
+	xCoordMap := make(map[int][]*Point)
+	xCoordMap[0] = make([]*Point, 0)
+	coordinates := &Coordinates{
+		xAxis: xCoordMap,
+	}
+	coordinates.addPoint(0, 0, 1)
+	return coordinates
+}
+
+func (c *Coordinates) sumAdjacent(x, y int) int {
+	newValue := 0
+	for i := -1; i < 2; i++ {
+		for j := -1; j < 2; j++ {
+			if !(i == 0 && j == 0) {
+				newValue += c.getPointValue(x+i, y+j)
 			}
 		}
-		//case: middle number of side
-		//case: last number of a side
-	} */
+	}
+	return newValue
+}
+
+func snake() int {
+	coords := buildCoordinates()
+	goal := input3
+	currentHead := 1
+	x := 0
+	y := 0
+	for i := 1; currentHead < goal; i++ {
+		//distance to walk in each direction before turning left
+		quadrantDistance := 2 * i
+		//walk one step right
+		x++
+		currentHead = coords.addPointWithAdjacentValue(x, y)
+		if currentHead > goal {
+			return currentHead
+		}
+		//walk (quadrant-distance - 1) north
+		for n := 0; n < quadrantDistance-1; n++ {
+			y++
+			currentHead = coords.addPointWithAdjacentValue(x, y)
+			if currentHead > goal {
+				return currentHead
+			}
+		}
+		//walk 2x quadrant-distance west
+		for w := 0; w < quadrantDistance; w++ {
+			x--
+			currentHead = coords.addPointWithAdjacentValue(x, y)
+			if currentHead > goal {
+				return currentHead
+			}
+		}
+		//walk 2x quadrant-distance south
+		for s := 0; s < quadrantDistance; s++ {
+			y--
+			currentHead = coords.addPointWithAdjacentValue(x, y)
+			if currentHead > goal {
+				return currentHead
+			}
+		}
+		//walk 2x quadrant-distance east
+		for e := 0; e < quadrantDistance; e++ {
+			x++
+			currentHead = coords.addPointWithAdjacentValue(x, y)
+			if currentHead > goal {
+				return currentHead
+			}
+		}
+		//back to the start!
+	}
+	return currentHead
+}
+
+func (co *Coordinates) addPointWithAdjacentValue(x, y int) int {
+	value := co.sumAdjacent(x, y)
+	co.addPoint(x, y, value)
+	return value
+}
+
+func (co *Coordinates) addPoint(x, y, val int) {
+	p := &Point{
+		X:   x,
+		Y:   y,
+		Val: val,
+	}
+	co.xAxis[x] = append(co.xAxis[x], p)
+}
+
+func (co *Coordinates) getPointValue(x, y int) int {
+	for _, point := range co.xAxis[x] {
+		if point.Y == y {
+			return point.Val
+		}
+	}
 	return 0
 }
