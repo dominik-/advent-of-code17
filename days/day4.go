@@ -9,7 +9,7 @@ import (
 )
 
 func Day4() {
-	scanner := getScanner("inputs/input4.csv")
+	scanner := GetScanner("inputs/input4.csv")
 	var validCountStar7, validCountStar8 int
 	for {
 		if scanner.Scan() {
@@ -29,7 +29,7 @@ func Day4() {
 		}
 	}
 	fmt.Printf("Valid passwords by equal strings: %d\n", validCountStar7)
-	fmt.Printf("Valid passwords by equal character sets: %d", validCountStar8)
+	fmt.Printf("Valid passwords by equal character sets: %d\n", validCountStar8)
 }
 
 func validLine(comparePairs func(string, string) bool, words []string) bool {
@@ -70,7 +70,7 @@ func stringsEqual(a, b string) bool {
 	return strings.Compare(a, b) == 0
 }
 
-func getScanner(filename string) *bufio.Scanner {
+func GetScanner(filename string) *bufio.Scanner {
 	file, err := os.Open(filename)
 	if err != nil {
 		log.Printf("Couldn't open file %s, error was: %v", filename, err)

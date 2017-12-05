@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	fmt.Println("Day 1 Result:")
+	/* fmt.Println("Day 1 Result:")
 	days.Day1()
 	fmt.Println("Day 2 Result:")
 	days.Day2()
@@ -15,4 +15,7 @@ func main() {
 	days.Day3()
 	fmt.Println("Day 4 Result:")
 	days.Day4()
+	*/
+	fmt.Println("Day 5 Result:")
+	days.Day5()
 }
