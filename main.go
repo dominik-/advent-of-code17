@@ -15,7 +15,9 @@ func main() {
 	days.Day3()
 	fmt.Println("Day 4 Result:")
 	days.Day4()
-	*/
 	fmt.Println("Day 5 Result:")
 	days.Day5()
+	*/
+	fmt.Println("Day 6 Result:")
+	days.Day6()
 }
